@@ -43,27 +43,23 @@ def test_verify_file_is_image_2():
         file = FileStorage(fp)
         assert verify_file_is_image(file)
 
-# Test Case for get_dimension_of_image
-# ====================================
-# Test Case 1: File is not an image
-def test_get_dimension_of_image_1():
-    not_img_path = 'tests/image.txt'
-    file = None
-    with open(not_img_path,'rb') as fp:
-        file = FileStorage(fp)
-        x, y = get_dimension_of_image(file)
-        assert (x==-1)
-        assert (y==-1)
 
-# Test Case 2: File is an image, image demension returned
-def test_get_dimension_of_image_2():
-    img_path = 'tests/image.jpg'
-    file = None
-    with open(img_path,'rb') as fp:
-        file = FileStorage(fp)
-        x, y = get_dimension_of_image(file)
-        assert (x==1200)
-        assert (y==817)
+# Test Case for resize_image_by_width
+# ===================================
+# Test Case 1: Imagae is Resized
+def test_resize_image_by_width_1():
+    img_path = 'tests/image_resize.png'
+    img = Image.open(img_path)
+    original_x, original_y = img.size
+    target_width = 500
+    resized_img = resize_image_by_width(img,target_width)
+    resized_x, resized_y = resized_img.size
+
+    assert resized_x == target_width
+    assert resized_y != original_y
+    assert resized_x != original_x
+    assert resized_y == 569
+
 
 # Test Case for draw_image
 # =========================
@@ -74,11 +70,12 @@ def test_draw_image_1():
     x = 15
     y = 15
     text = "Random Text"
+    is_top_text = True
     with open(not_img_path,'rb') as fp:
         file = FileStorage(fp)
-        assert not draw_image(file,file.filename,x,y,text)
+        assert not draw_image(file,file.filename,text,is_top_text)
 
-# Test Case 2: File is an Image, Output File is Generated
+# Test Case 2: File is an Image, Test Top Text , Output File is Generated
 def test_draw_image_2():
     filename = 'result.jpg'
     # Verify that Destination File doesn't Exist
@@ -89,12 +86,11 @@ def test_draw_image_2():
 
     img_path = 'tests/image.jpg'
     file = None
-    x = 15
-    y = 15
-    text = "Random Text"
+    text = "Now I have a Caption Hi"
+    is_top_text = True
     with open(img_path,'rb') as fp:
         file = FileStorage(fp)
-        output_file_path = draw_image(img_path,filename,x,y,text)
+        output_file_path = draw_image(file,filename,text,is_top_text)
         assert output_file_path
         assert Image.open(output_file_path)
         
@@ -103,3 +99,27 @@ def test_draw_image_2():
             os.remove(output_file_path)
         except OSError:
             pass
+
+# Test Case 3: File is an Image, Test Bottom Text , Output File is Generated
+def test_draw_image_3():
+    filename = 'result.png'
+    # Verify that Destination File doesn't Exist
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
+
+    img_path = 'tests/image_resize.png'
+    file = None
+    text = "Now I have a Caption Hi"
+    with open(img_path,'rb') as fp:
+        file = FileStorage(fp)
+        output_file_path = draw_image(file,filename,text,False)
+        assert output_file_path
+        assert Image.open(output_file_path)
+        # Remove File Once Verified
+        try:
+            os.remove(output_file_path)
+        except OSError:
+            pass
+
