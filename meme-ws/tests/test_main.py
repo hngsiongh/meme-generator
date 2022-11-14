@@ -1,6 +1,9 @@
 import pytest
-from io import StringIO, BytesIO
+import os
+from io import BytesIO
 from main import app
+
+
 
 
 @pytest.fixture(scope='module')
@@ -130,6 +133,10 @@ def test_generate_meme_8(test_app):
                             })
         assert resp.status_code == 200
         assert resp.mimetype == 'image/jpeg'
+        des_path = "image/image.jpg"
+        assert os.path.exists(des_path)
+        os.remove(des_path)
+
 
 # Test case 9: Caption Text Added for Top Text
 def test_generate_meme_9(test_app):
@@ -144,6 +151,9 @@ def test_generate_meme_9(test_app):
         
         assert resp.status_code == 200
         assert resp.mimetype == 'image/jpeg'
+        des_path = "image/image.jpg"
+        assert os.path.exists(des_path)
+        os.remove(des_path)
 
 # Test case 10: Caption Text Added for Bottom Text
 def test_generate_meme_10(test_app):
@@ -158,6 +168,9 @@ def test_generate_meme_10(test_app):
         
         assert resp.status_code == 200
         assert resp.mimetype == 'image/jpeg'
+        des_path = "image/image.jpg"
+        assert os.path.exists(des_path)
+        os.remove(des_path)
 
 # Test case 11: Caption Text Added for Both Top and Bottom Text
 def test_generate_meme_11(test_app):
@@ -172,3 +185,23 @@ def test_generate_meme_11(test_app):
         
         assert resp.status_code == 200
         assert resp.mimetype == 'image/jpeg'
+        des_path = "image/image.jpg"
+        assert os.path.exists(des_path)
+        os.remove(des_path)
+
+# Test case 12: Caption Text Added for Both Top and Bottom Text For PNG File
+def test_generate_meme_12(test_app):
+    with open('tests/image_resize.png', 'rb') as file_img:
+        buf = BytesIO(file_img.read())
+
+        resp = test_app.post('/generateMeme', content_type='multipart/form-data',
+                             data={'btmText': 'Random Text',
+                                   'topText': 'Random Text',
+                                   'memeImage': (buf, "image_resize.png")
+                                   })
+        
+        assert resp.status_code == 200
+        assert resp.mimetype == 'image/png'
+        des_path = "image/image_resize.png"
+        assert os.path.exists(des_path)
+        os.remove(des_path)

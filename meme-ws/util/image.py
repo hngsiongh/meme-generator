@@ -51,7 +51,7 @@ def draw_image(filepath,filename,text,is_top):
     else:
         padding = 100
         draw.text((mid_point,y-text_height-padding),text,(255,255,255),font=font)
-    des_filepath = "tests/" + filename
+    des_filepath = "image/" + filename
     img.save(des_filepath)
 
     return des_filepath
