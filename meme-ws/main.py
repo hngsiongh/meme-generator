@@ -1,8 +1,9 @@
 from flask import Flask, request, send_file
-from io import BufferedReader
-from util.image import *
+from flask_cors import CORS
 import mimetypes
+from util.image import *
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/healthcheck', methods=['GET'])
 def healthcheck():
@@ -60,4 +61,4 @@ def generate_meme():
     return send_file(des_img_filepath, mimetype=mimetypes.guess_type(image_file.filename)[0])
 
 if __name__ == '__main__':
-   app.run(host="127.0.0.1",port=6000)
+   app.run(host="127.0.0.1",port=8999)
