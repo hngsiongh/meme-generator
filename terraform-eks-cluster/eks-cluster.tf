@@ -6,16 +6,16 @@
 # -IAM Policies
 module "eks" {
   # Source Code for the Module
-  source          = "terraform-aws-modules/eks/aws"
-  version         = "17.24.0"
+  source  = "terraform-aws-modules/eks/aws"
+  version = "17.24.0"
 
   # Name of the EKS cluster.
-  cluster_name    = local.cluster_name
+  cluster_name = local.cluster_name
   # Kubernetes Version
   cluster_version = "1.20"
   # Specify Subnets in which nodes will be created
   # ----- Creating nodes in Private Network
-  subnets         = module.vpc.private_subnets
+  subnets = module.vpc.private_subnets
   # VPC where the cluster and workers would be deployed
   vpc_id = module.vpc.vpc_id
 
