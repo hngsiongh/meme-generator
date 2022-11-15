@@ -1,1 +1,1 @@
-docker run -d -p 80:80 --env REACT_APP_GENERATOR_HOST_ADDRESS=memegenerator.com --name ui meme-ui
+docker run -d -p 80:80 --name ui meme-ui

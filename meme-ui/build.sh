@@ -1,1 +1,1 @@
-docker build --platform=linux/amd64 -t meme-ui .
+docker build --platform=linux/amd64 -t stormaggedon/meme-ui:latest .

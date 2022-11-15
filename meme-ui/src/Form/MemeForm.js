@@ -67,7 +67,7 @@ function MemeForm() {
             headers: { 'Content-Type': 'multipart/form-data' } , responseType: 'arraybuffer' 
         }
         let url = "http://" + hostAddress + ":" + port + "/generateMeme"
-        
+
 
         axios.post(url, formData, config)
         .catch(error => {
