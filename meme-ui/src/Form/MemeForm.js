@@ -15,7 +15,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 function MemeForm() {
 
     const hostAddress = process.env.REACT_APP_GENERATOR_HOST_ADDRESS
-    const port = process.env.REACT_APP_GENERATOR_PORT
     const textMaxLength = 50
     //States
     const [showFilename, setShowFilename] = useState(false)
@@ -66,7 +65,7 @@ function MemeForm() {
         const config = {     
             headers: { 'Content-Type': 'multipart/form-data' } , responseType: 'arraybuffer' 
         }
-        let url = "http://" + hostAddress + ":" + port + "/generateMeme"
+        let url = "http://" + hostAddress + "/generateMeme"
 
 
         axios.post(url, formData, config)
